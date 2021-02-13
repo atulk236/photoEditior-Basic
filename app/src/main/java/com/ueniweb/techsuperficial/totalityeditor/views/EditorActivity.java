@@ -29,6 +29,7 @@ import com.fenchtose.nocropper.BitmapResult;
 import com.fenchtose.nocropper.CropperImageView;
 import com.fenchtose.nocropper.CropperView;
 import com.ueniweb.techsuperficial.totalityeditor.R;
+import com.ueniweb.techsuperficial.totalityeditor.util.EditHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,7 +44,7 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class EditorActivity extends AppCompatActivity {
     Context mcontext;
-    private static final String TAG = "Editora";
+    private static final String TAG = "EditorActivity";
     @BindView(R.id.image_view)
     ImageView image_view;
     @BindView(R.id.imgtick)
@@ -70,63 +71,46 @@ public class EditorActivity extends AppCompatActivity {
     @BindView(R.id.imgcrosscrop)
     ImageView imgcrosscrop;
     Bitmap rotated;
-    Uri afterflipuri;
+    EditHandler editHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
+        init();
+    }
+
+    public static void startWithUri(@NonNull Context context, @NonNull Uri uri) {
+        Intent intent = new Intent(context, EditorActivity.class);
+        intent.setData(uri);
+        context.startActivity(intent);
+    }
+
+    private void init() {
+        initVariable();
+        getIntentData();
+    }
+
+    private void initVariable() {
         mcontext = EditorActivity.this;
+        cropper_iv.fitToCenter();
+        cropperImageView = new CropperImageView(mcontext);
+        editHandler = new EditHandler(mcontext, this);
+    }
 
-
+    private void getIntentData() {
         uri = getIntent().getData();
         if (uri != null) {
             try {
                 bitmapcrop = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                afterflipuri = getImageUri(flip(bitmapcrop));
-                image_view.setImageURI(afterflipuri);
-                bitmapcrop = MediaStore.Images.Media.getBitmap(this.getContentResolver(), afterflipuri);
+                image_view.setImageURI(uri);
                 cropper_iv.setImageBitmap(bitmapcrop);
             } catch (Exception e) {
                 Log.e(TAG, "setImageUri", e);
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
-
-        init();
-    }
-
-    Bitmap flip(Bitmap src) {
-        Matrix m = new Matrix();
-        m.preScale(-1, 1);
-        Bitmap dst = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), m, false);
-        dst.setDensity(DisplayMetrics.DENSITY_DEFAULT);
-        return (dst);
-    }
-
-    public Uri getImageUri(Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(mcontext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    private void init() {
-        initVariable();
-    }
-
-    private void initVariable() {
-        cropper_iv.fitToCenter();
-        cropperImageView = new CropperImageView(mcontext);
-
-    }
-
-
-    public static void startWithUri(@NonNull Context context, @NonNull Uri uri) {
-        Intent intent = new Intent(context, EditorActivity.class);
-        intent.setData(uri);
-        context.startActivity(intent);
     }
 
     @OnClick({R.id.image_view, R.id.imgtick, R.id.rotate_iv, R.id.crop_iv, R.id.undo_iv, R.id.imgtickcrop, R.id.imgcrosscrop})
@@ -142,24 +126,7 @@ public class EditorActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.rotate_iv:
-                if (rotated == null) {
-                  //  Bitmap myImg = bitmapcrop;
-                    BitmapDrawable drawable = (BitmapDrawable) image_view.getDrawable();
-                    Bitmap myImg = drawable.getBitmap();
-                    Matrix matrix = new Matrix();
-                    matrix.postRotate(180);
-                    rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
-                            matrix, true);
-                    image_view.setImageBitmap(rotated);
-                } else {
-                    Bitmap myImg = rotated;
-                    Matrix matrix = new Matrix();
-                    matrix.postRotate(180);
-                    rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
-                            matrix, true);
-                    image_view.setImageBitmap(rotated);
-                }
-
+                rotateClicked();
                 break;
             case R.id.crop_iv:
                 imgtickcrop.setVisibility(View.VISIBLE);
@@ -189,17 +156,35 @@ public class EditorActivity extends AppCompatActivity {
         }
     }
 
+    private void rotateClicked() {
+        if (rotated == null) {
+            BitmapDrawable drawable = (BitmapDrawable) image_view.getDrawable();
+            Bitmap myImg = drawable.getBitmap();
+            Matrix matrix = new Matrix();
+            matrix.postRotate(180);
+            rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
+                    matrix, true);
+            image_view.setImageBitmap(rotated);
+        } else {
+            Bitmap myImg = rotated;
+            Matrix matrix = new Matrix();
+            matrix.postRotate(180);
+            rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
+                    matrix, true);
+            image_view.setImageBitmap(rotated);
+        }
+    }
+
     private void undoClicked() {
-        image_view.setImageURI(afterflipuri);
+        image_view.setImageURI(uri);
     }
 
     private void saveImage() {
-        if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (editHandler.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             BitmapDrawable drawable = (BitmapDrawable) image_view.getDrawable();
-            Bitmap filterbitmap = drawable.getBitmap();
-
+            Bitmap editedbitmap = drawable.getBitmap();
             try {
-                Uri uri = getUri(filterbitmap);
+                Uri uri = editHandler.getUri(editedbitmap);
                 Intent intent = new Intent(EditorActivity.this, HomeActivity.class);
                 String struri;
                 struri = String.valueOf(uri);
@@ -211,34 +196,6 @@ public class EditorActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
         }
-    }
-
-    public Uri getUri(Bitmap bitmap) throws IOException {
-        File tempDir = Environment.getExternalStorageDirectory();
-        tempDir = new File(tempDir.getAbsolutePath() + "/.temp/");
-        tempDir.mkdir();
-        File tempFile = File.createTempFile("framten", ".png", tempDir);
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-        byte[] bitmapData = bytes.toByteArray();
-        FileOutputStream fos = new FileOutputStream(tempFile);
-        fos.write(bitmapData);
-        fos.flush();
-        fos.close();
-        return Uri.fromFile(tempFile);
-
-    }
-
-    public boolean requestPermission(String permission) {
-        boolean isGranted = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
-        if (!isGranted) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{permission},
-                    READ_WRITE_STORAGE);
-        }
-        return isGranted;
     }
 }

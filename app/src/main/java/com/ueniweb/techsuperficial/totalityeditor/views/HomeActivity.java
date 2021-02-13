@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,34 +28,27 @@ import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.controls.Flash;
 import com.ueniweb.techsuperficial.totalityeditor.BuildConfig;
 import com.ueniweb.techsuperficial.totalityeditor.R;
-import com.ueniweb.techsuperficial.totalityeditor.util.ImageCaptureManager;
+import com.ueniweb.techsuperficial.totalityeditor.util.EditHandler;
 import com.ueniweb.techsuperficial.totalityeditor.util.PermissionsUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
 import static android.widget.ImageView.ScaleType.FIT_CENTER;
 
 public class HomeActivity extends AppCompatActivity implements BitmapCallback {
     Context mcontext;
-
     @BindView(R.id.add_photo_iv)
     ImageView addphotoiv;
     @BindView(R.id.camera_iv)
     ImageView camera_iv;
-
     @BindView(R.id.cameraview)
     CameraView cameraview;
     @BindView(R.id.camerall)
     RelativeLayout camerall;
-
     @BindView(R.id.camera_click_iv)
     ImageView camera_click_iv;
     @BindView(R.id.change_camera_iv)
@@ -68,26 +60,31 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
     Boolean isFlront = false;
     Boolean isFlashOn = false;
     private int requestMode = BuildConfig.RequestMode;
-
     @BindView(R.id.image_iv)
     ImageView image_iv;
-
     @BindView(R.id.welcomell)
     LinearLayout welcomell;
-    private ImageCaptureManager captureManager;
     String uristr;
     Uri saveduri;
     Bitmap bitmapfromedit;
     private View parent_view;
-
+    EditHandler editHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-        parent_view = findViewById(android.R.id.content);
+        init();
+    }
 
+    private void init() {
+        initVariable();
+        getIntentData();
+        cameraResultListener();
+    }
+
+    private void getIntentData() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             try {
@@ -103,15 +100,8 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
         } else {
             image_iv.setImageResource(R.drawable.homeimage);
             image_iv.setScaleType(FIT_CENTER);
-            image_iv.setPadding(20,20,20,20);
-
+            image_iv.setPadding(200, 200, 200, 200);
         }
-        init();
-    }
-
-    private void init() {
-        initVariable();
-        cameraResult();
     }
 
     private void save(Bitmap bitmap) {
@@ -120,11 +110,9 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
         showSaveSnackBar();
     }
 
-    private void showSaveSnackBar() {
+    public void showSaveSnackBar() {
         final Snackbar snackbar = Snackbar.make(parent_view, "", Snackbar.LENGTH_LONG);
-        //inflate view
         View custom_view = getLayoutInflater().inflate(R.layout.snackbar_saved, null);
-
         snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
         Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
         snackBarView.setPadding(0, 0, 0, 0);
@@ -134,12 +122,11 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
                 snackbar.dismiss();
             }
         });
-
         snackBarView.addView(custom_view, 0);
         snackbar.show();
     }
 
-    private void cameraResult() {
+    private void cameraResultListener() {
         cameraview.addCameraListener(new CameraListener() {
             @Override
             public void onPictureTaken(@NonNull PictureResult result) {
@@ -156,11 +143,9 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
 
     private void initVariable() {
         mcontext = HomeActivity.this;
+        editHandler = new EditHandler(mcontext, this);
         cameraview.setLifecycleOwner(this);
-        if (PermissionsUtils.checkCameraPermission(HomeActivity.this) &&
-                PermissionsUtils.checkWriteStoragePermission(HomeActivity.this)) {
-        }
-        captureManager = new ImageCaptureManager(mcontext);
+        parent_view = findViewById(android.R.id.content);
     }
 
     @OnClick(R.id.add_photo_iv)
@@ -191,9 +176,7 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
         if (resultCode == RESULT_OK) {
             if (requestCode == requestMode && data != null) {
                 final Uri selectedUri = data.getData();
-
                 if (selectedUri != null) {
-                    //  Uri imageUri;
                     EditorActivity.startWithUri(HomeActivity.this, selectedUri);
                 } else {
                     Toast.makeText(mcontext, "Error getting image", Toast.LENGTH_SHORT).show();
@@ -223,11 +206,9 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
         if (!isFlront) {
             cameraview.setFacing(Facing.FRONT);
             isFlront = true;
-
         } else {
             cameraview.setFacing(Facing.BACK);
             isFlront = false;
-
         }
     }
 
@@ -249,18 +230,15 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
             flash_off_iv.setVisibility(View.GONE);
             isFlashOn = true;
         }
-
     }
 
     public void onRequestPermissionsResult(int i, @NonNull String[] strArr, @NonNull int[] iArr) {
         if (iArr.length > 0 && iArr[0] == 0) {
             if ((i == 1 || i == 3) && PermissionsUtils.checkWriteStoragePermission(HomeActivity.this)
                     && PermissionsUtils.checkCameraPermission(HomeActivity.this)) {
-                //openCamera();
             }
         }
     }
-
 
     @Override
     protected void onResume() {
@@ -284,36 +262,17 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
     public void onBitmapReady(@Nullable Bitmap bitmap) {
         final Uri selectedUri;
         try {
-            selectedUri = getUri(bitmap);
-
+            selectedUri = editHandler.getUri(bitmap);
             if (selectedUri != null) {
-                //  Uri imageUri;
-                EditorActivity.startWithUri(HomeActivity.this, selectedUri);
+                Bitmap bitmapcrop = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedUri);
+                Uri afterflipuri = editHandler.getUri(editHandler.flip(bitmapcrop));
+                EditorActivity.startWithUri(HomeActivity.this, afterflipuri);
             } else {
                 Toast.makeText(mcontext, "Error getting image", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-    }
-
-    public Uri getUri(Bitmap bitmap) throws IOException {
-        File tempDir = Environment.getExternalStorageDirectory();
-        tempDir = new File(tempDir.getAbsolutePath() + "/.temp/");
-        tempDir.mkdir();
-        File tempFile = File.createTempFile("framten", ".png", tempDir);
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-        byte[] bitmapData = bytes.toByteArray();
-
-        //write the bytes in file
-        FileOutputStream fos = new FileOutputStream(tempFile);
-        fos.write(bitmapData);
-        fos.flush();
-        fos.close();
-        return Uri.fromFile(tempFile);
     }
 
     @Override

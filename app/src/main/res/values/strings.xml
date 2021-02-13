@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TotalityEditor</string>
+    <string name="label_select_picture">select image</string>
+</resources>

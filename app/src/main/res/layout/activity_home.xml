@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".views.HomeActivity">
+
+    <RelativeLayout
+        android:id="@+id/camerall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/cameraview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:keepScreenOn="true"
+            app:cameraAudio="off"
+            app:cameraFlash="auto"
+            app:cameraFacing="front"
+            app:cameraGesturePinch="zoom"
+            app:cameraGestureTap="autoFocus"
+            app:cameraMode="picture"
+            app:cameraPictureSizeBiggest="true"
+            app:cameraPictureSizeMaxArea="50000000"
+            app:cameraPictureSizeMaxHeight="1500"
+            app:cameraPictureSizeMaxWidth="1500"
+            app:cameraPictureSizeMinArea="10000000"
+            app:cameraPictureSizeMinHeight="1200"
+            app:cameraPictureSizeMinWidth="1200"
+            app:cameraPreview="glSurface"
+            app:cameraRequestPermissions="true"
+            app:cameraUseDeviceOrientation="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:gravity="center">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flash_on_iv"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/cll"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/camera_click_iv"
+                app:layout_constraintTop_toTopOf="@+id/cll"
+                app:srcCompat="@drawable/ic_flash_camera" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flash_off_iv"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/cll"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/camera_click_iv"
+                app:layout_constraintTop_toTopOf="@+id/cll"
+                app:srcCompat="@drawable/ic_flash_off_camera" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/camera_click_iv"
+                android:layout_width="@dimen/_75sdp"
+                android:layout_height="@dimen/_75sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/cll"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cll"
+                app:srcCompat="@drawable/ic_camera" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/change_camera_iv"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/cll"
+                app:layout_constraintLeft_toRightOf="@+id/camera_click_iv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cll"
+                app:srcCompat="@drawable/ic_flip_camera" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/welcomell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="@dimen/_295sdp"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/_295sdp"
+            android:background="@color/colorPrimaryDark">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/add_photo_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/home_btn_bg"
+                android:layout_marginRight="@dimen/_15sdp"
+                app:srcCompat="@drawable/ic_gallery_icon" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/camera_iv"
+                android:layout_width="100dp"
+                android:background="@drawable/home_btn_bg"
+                android:layout_height="100dp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:gravity="center_vertical"
+                app:srcCompat="@drawable/ic_camera" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

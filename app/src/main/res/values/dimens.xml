@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">180dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="zero_margin">0dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_normal">15sp</dimen>
+    <dimen name="font_normal_small">14sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_extra_small">10sp</dimen>
+
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="placeholderImage">60dp</dimen>
+    <dimen name="placeholderTextHeight">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+
+    <!-- typical spacing between two views -->
+    <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_extra_huge">80dp</dimen>
+    <dimen name="dp_450">450dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_250">250dp</dimen>
+    <dimen name="dp_220">220dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_normal">14dp</dimen>
+    <dimen name="spacing_small">10dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_mid_tiny">7dp</dimen>
+    <dimen name="spacing_extra_tiny">1px</dimen>
+
+    <!-- typical padding -->
+    <dimen name="padding_tiny">2dp</dimen>
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="padding_meduim">10dp</dimen>
+    <dimen name="padding_large">15dp</dimen>
+
+    <!-- typical radius -->
+    <dimen name="radius_small">2dp</dimen>
+    <dimen name="radius_normal">5dp</dimen>
+    <dimen name="radius_medium">10dp</dimen>
+    <dimen name="radius_large">24dp</dimen>
+    <dimen name="radius_large_extra">26dp</dimen>
+
+    <!-- typical strokes -->
+    <dimen name="stroke_tiny">1px</dimen>
+    <dimen name="stroke_small">1dp</dimen>
+    <dimen name="stroke_medium">2dp</dimen>
+    <dimen name="stroke_large">4dp</dimen>
+
+    <!-- typical sizes of views -->
+    <dimen name="button_height_tall">60dp</dimen>
+    <dimen name="button_height_normal">40dp</dimen>
+    <dimen name="button_height_short">32dp</dimen>
+    <dimen name="button_height_extra_short">24dp</dimen>
+    <dimen name="view_length_short">40dp</dimen>
+    <dimen name="view_length_normal">60dp</dimen>
+    <dimen name="view_length_huge">80dp</dimen>
+    <dimen name="view_length_extra_huge">96dp</dimen>
+
+    <dimen name="textSize35sp">35sp</dimen>
+    <dimen name="textSize30sp">30sp</dimen>
+    <dimen name="textSize28sp">28sp</dimen>
+    <dimen name="textSize26sp">26sp</dimen>
+    <dimen name="textSize24sp">24sp</dimen>
+    <dimen name="textSize22sp">22sp</dimen>
+    <dimen name="textSize20sp">20sp</dimen>
+    <dimen name="textSize18sp">18sp</dimen>
+    <dimen name="textSize16sp">16sp</dimen>
+    <dimen name="textSize15sp">15sp</dimen>
+    <dimen name="textSize14sp">14sp</dimen>
+    <dimen name="textSize12sp">12sp</dimen>
+    <dimen name="textSize10sp">10sp</dimen>
+    <dimen name="textSize8sp">8sp</dimen>
+    <dimen name="textSize6sp">6sp</dimen>
+
+    <dimen name="mar_0">0dp</dimen>
+    <dimen name="mar_0_1">0.1dp</dimen>
+    <dimen name="mar_0_2">0.2dp</dimen>
+    <dimen name="mar_0_5">0.5dp</dimen>
+    <dimen name="mar_1">1dp</dimen>
+    <dimen name="mar_2">2dp</dimen>
+    <dimen name="mar_3">3dp</dimen>
+    <dimen name="mar__3">-3dp</dimen>
+    <dimen name="mar__2">-2dp</dimen>
+    <dimen name="mar_2_5">2.5dp</dimen>
+    <dimen name="mar_5">5dp</dimen>
+    <dimen name="mar_4">4dp</dimen>
+    <dimen name="mar_7">7dp</dimen>
+
+    <dimen name="mar__5">-5dp</dimen>
+    <dimen name="mar_8">8dp</dimen>
+    <dimen name="mar__8">-8dp</dimen>
+    <dimen name="mar_10">10dp</dimen>
+    <dimen name="mar__10">-10dp</dimen>
+    <dimen name="mar_12">12dp</dimen>
+    <dimen name="mar_13">13dp</dimen>
+    <dimen name="mar_15">15dp</dimen>
+    <dimen name="mar__15">-15dp</dimen>
+    <dimen name="mar_18">18dp</dimen>
+    <dimen name="mar_20">20dp</dimen>
+    <dimen name="mar__20">-20dp</dimen>
+    <dimen name="mar_25">25dp</dimen>
+    <dimen name="mar_30">30dp</dimen>
+    <dimen name="mar_35">35dp</dimen>
+    <dimen name="mar_40">40dp</dimen>
+    <dimen name="mar_45">45dp</dimen>
+    <dimen name="mar_50">50dp</dimen>
+    <dimen name="mar_60">60dp</dimen>
+    <dimen name="mar_65">65dp</dimen>
+    <dimen name="mar_70">70dp</dimen>
+    <dimen name="mar__70">-70dp</dimen>
+    <dimen name="mar_90">90dp</dimen>
+    <dimen name="mar_80">80dp</dimen>
+    <dimen name="mar__80">-80dp</dimen>
+    <dimen name="mar_100">100dp</dimen>
+    <dimen name="mar_110">110dp</dimen>
+    <dimen name="mar_125">125dp</dimen>
+    <dimen name="mar_150">150dp</dimen>
+    <dimen name="mar_165">165dp</dimen>
+    <dimen name="mar_180">180dp</dimen>
+    <dimen name="mar_190">190dp</dimen>
+    <dimen name="mar_200">200dp</dimen>
+    <dimen name="mar_220">220dp</dimen>
+    <dimen name="mar_250">250dp</dimen>
+    <dimen name="mar_300">300dp</dimen>
+    <fraction name="letter_spacing">-0.04</fraction>
+    <dimen name="text_margin">16dp</dimen>
+</resources>

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.snackbar.Snackbar;
 import com.otaliastudios.cameraview.BitmapCallback;
 import com.otaliastudios.cameraview.CameraListener;
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
     ImageView flash_on_iv;
     @BindView(R.id.flash_off_iv)
     ImageView flash_off_iv;
-    Boolean isFlront = false;
+    Boolean isFlront = true;
     Boolean isFlashOn = false;
     private int requestMode = BuildConfig.RequestMode;
     @BindView(R.id.image_iv)
@@ -69,12 +70,14 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
     Bitmap bitmapfromedit;
     private View parent_view;
     EditHandler editHandler;
+    Uri afterflipuri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        Animatoo.animateInAndOut(HomeActivity.this);
         init();
     }
 
@@ -265,7 +268,12 @@ public class HomeActivity extends AppCompatActivity implements BitmapCallback {
             selectedUri = editHandler.getUri(bitmap);
             if (selectedUri != null) {
                 Bitmap bitmapcrop = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedUri);
-                Uri afterflipuri = editHandler.getUri(editHandler.flip(bitmapcrop));
+                if (isFlront){
+                    afterflipuri = editHandler.getUri(editHandler.flip(bitmapcrop));
+                }
+                else {
+                    afterflipuri = editHandler.getUri(bitmapcrop);
+                }
                 EditorActivity.startWithUri(HomeActivity.this, afterflipuri);
             } else {
                 Toast.makeText(mcontext, "Error getting image", Toast.LENGTH_SHORT).show();

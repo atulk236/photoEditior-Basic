@@ -38,6 +38,7 @@
         android:id="@+id/image_view"
         android:layout_width="@dimen/_295sdp"
         android:layout_height="@dimen/_295sdp"
+        android:background="#fff"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_ll"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -56,7 +57,9 @@
         <com.fenchtose.nocropper.CropperView
             android:id="@+id/cropper_iv"
             android:layout_width="match_parent"
+            app:nocropper__fit_to_center="true"
             android:layout_height="match_parent"
+            android:background="#fff"
 
             />
     </LinearLayout>

@@ -25,6 +25,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.fenchtose.nocropper.BitmapResult;
 import com.fenchtose.nocropper.CropperImageView;
 import com.fenchtose.nocropper.CropperView;
@@ -35,6 +36,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,6 +81,7 @@ public class EditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
+        Animatoo.animateSlideRight(EditorActivity.this);
         init();
     }
 
@@ -89,12 +93,17 @@ public class EditorActivity extends AppCompatActivity {
 
     private void init() {
         initVariable();
+        setCropImageView();
         getIntentData();
+    }
+
+    private void setCropImageView() {
+        cropper_iv.setMaxZoom(30);
+
     }
 
     private void initVariable() {
         mcontext = EditorActivity.this;
-        cropper_iv.fitToCenter();
         cropperImageView = new CropperImageView(mcontext);
         editHandler = new EditHandler(mcontext, this);
     }
@@ -120,13 +129,19 @@ public class EditorActivity extends AppCompatActivity {
                 break;
             case R.id.imgtick:
                 if (imgtickcrop.getVisibility() == View.VISIBLE) {
-                    Toast.makeText(mcontext, "Please crop ur  image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext, "Please crop image", Toast.LENGTH_SHORT).show();
                 } else {
                     saveImage();
                 }
+
                 break;
             case R.id.rotate_iv:
-                rotateClicked();
+                if (imgtickcrop.getVisibility() == View.VISIBLE) {
+                    Toast.makeText(mcontext, "Please crop image", Toast.LENGTH_SHORT).show();
+                } else {
+                    rotateClicked();
+                }
+
                 break;
             case R.id.crop_iv:
                 imgtickcrop.setVisibility(View.VISIBLE);
@@ -135,7 +150,12 @@ public class EditorActivity extends AppCompatActivity {
                 image_view.setVisibility(View.GONE);
                 break;
             case R.id.undo_iv:
-                undoClicked();
+                if (imgtickcrop.getVisibility() == View.VISIBLE) {
+                    Toast.makeText(mcontext, "Please crop image", Toast.LENGTH_SHORT).show();
+                } else {
+                    undoClicked();
+                }
+
                 break;
             case R.id.imgtickcrop:
                 cropper_iv_ll.setVisibility(View.GONE);
@@ -197,5 +217,11 @@ public class EditorActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSlideLeft(mcontext);
     }
 }

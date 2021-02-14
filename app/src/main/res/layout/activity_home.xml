@@ -121,7 +121,7 @@
             android:layout_width="@dimen/_295sdp"
             android:layout_gravity="center"
             android:layout_height="@dimen/_295sdp"
-            android:background="@color/colorPrimaryDark">
+            android:background="#45A98BD1">
 
         </ImageView>
 

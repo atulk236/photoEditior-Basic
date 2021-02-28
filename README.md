@@ -12,7 +12,7 @@ https://github.com/atulk236/photoEditior-Basic/blob/main/20210227_233032_0000.pn
 
 ### Prerequisites
 
-Things reuired<br>
+Things required<br>
 1. Android Studio
 
 

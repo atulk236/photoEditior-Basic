@@ -177,7 +177,6 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private void rotateClicked() {
-        if (rotated == null) {
             BitmapDrawable drawable = (BitmapDrawable) image_view.getDrawable();
             Bitmap myImg = drawable.getBitmap();
             Matrix matrix = new Matrix();
@@ -185,14 +184,7 @@ public class EditorActivity extends AppCompatActivity {
             rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
                     matrix, true);
             image_view.setImageBitmap(rotated);
-        } else {
-            Bitmap myImg = rotated;
-            Matrix matrix = new Matrix();
-            matrix.postRotate(180);
-            rotated = Bitmap.createBitmap(myImg, 0, 0, myImg.getWidth(), myImg.getHeight(),
-                    matrix, true);
-            image_view.setImageBitmap(rotated);
-        }
+
     }
 
     private void undoClicked() {

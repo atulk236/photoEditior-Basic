@@ -8,7 +8,6 @@
 https://github.com/atulk236/photoEditior-Basic/blob/main/20210227_233032_0000.png
 
 ![ScreenShot](https://github.com/atulk236/photoEditior-Basic/blob/main/20210227_233032_0000.png)
-![ScreenShot](https://github.com/atulk236/photoEditior-Basic/blob/master/app/src/main/res/drawable/homeimage.png)
 
 
 ### Prerequisites
